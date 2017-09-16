@@ -16,6 +16,7 @@
 #include "wci/frontend/Source.h"
 #include "wci/frontend/FrontendFactory.h"
 #include "wci/frontend/pascal/PascalToken.h"
+#include "wci/frontend/java/JavaToken.h"
 #include "wci/intermediate/SymTab.h"
 #include "wci/intermediate/ICode.h"
 #include "wci/backend/Backend.h"
@@ -26,6 +27,7 @@
 using namespace std;
 using namespace wci::frontend;
 using namespace wci::frontend::pascal;
+using namespace wci::frontend::java;
 using namespace wci::intermediate;
 using namespace wci::backend;
 using namespace wci::message;
@@ -45,6 +47,7 @@ int main(int argc, char *args[])
     {
         // Operation.
         string operation = args[1];
+        string typeCo = args[2];
         if ((operation != "compile") && (operation != "execute"))
         {
             throw USAGE;
@@ -57,15 +60,18 @@ int main(int argc, char *args[])
         {
             flags += string(args[i]).substr(1);
         }
+        if (typeCo == "Pascal" || typeCo == "Java")
+        {
+			// Source path.
+			if (i < argc) {
+				string path = args[i+1];
+				Pascal(operation, path, flags, typeCo);
+			}
+			else {
+			            throw string("Missing source file.");
+			}
+        }
 
-        // Source path.
-        if (i < argc) {
-            string path = args[i];
-            Pascal(operation, path, flags);
-        }
-        else {
-            throw string("Missing source file.");
-        }
     }
     catch (string& msg)
     {
@@ -75,7 +81,7 @@ int main(int argc, char *args[])
     return 0;
 }
 
-Pascal::Pascal(string operation, string file_path, string flags)
+Pascal::Pascal(string operation, string file_path, string flags, string typeCo)
     throw (string)
 {
     ifstream input;
@@ -88,7 +94,7 @@ Pascal::Pascal(string operation, string file_path, string flags)
     source = new Source(input);
     source->add_message_listener(this);
 
-    parser = FrontendFactory::create_parser("Pascal", "top-down", source);
+    parser = FrontendFactory::create_parser(typeCo, "top-down", source);
     parser->add_message_listener(this);
     parser->parse();
 
