@@ -21,6 +21,16 @@ SRCS = Pascal.cpp \
        wci/frontend/pascal/tokens/PascalSpecialSymbolToken.cpp \
        wci/frontend/pascal/tokens/PascalStringToken.cpp \
        wci/frontend/pascal/tokens/PascalWordToken.cpp \
+       wci/frontend/java/JavaParserTD.cpp \
+       wci/frontend/java/JavaScanner.cpp \
+       wci/frontend/java/JavaError.cpp \
+       wci/frontend/java/JavaErrorHandler.cpp \
+       wci/frontend/java/JavaToken.cpp \
+       wci/frontend/java/tokens/JavaErrorToken.cpp \
+       wci/frontend/java/tokens/JavaNumberToken.cpp \
+       wci/frontend/java/tokens/JavaSpecialSymbolToken.cpp \
+       wci/frontend/java/tokens/JavaStringToken.cpp \
+       wci/frontend/java/tokens/JavaWordToken.cpp \
        wci/backend/BackendFactory.cpp \
        wci/backend/Backend.cpp \
        wci/backend/interpreter/Executor.cpp \
