@@ -53,7 +53,7 @@ Token *JavaScanner::extract_token() throw (string)
     }
     else if (current_ch == '\'')
     {
-        token = new JavaStringToken(source);
+       token = new JavaStringToken(source);
     }
     else if (JavaToken::SPECIAL_SYMBOLS.find(string_ch) != JavaToken::SPECIAL_SYMBOLS.end())
     {
@@ -61,7 +61,7 @@ Token *JavaScanner::extract_token() throw (string)
     }
     else
     {
-      //  token = new JavaErrorToken(source, INVALID_CHARACTER, string_ch);
+        token = new JavaErrorToken(source, INVALID_CHARACTER, string_ch);
         next_char();  // consume character
     }
 
@@ -71,8 +71,38 @@ Token *JavaScanner::extract_token() throw (string)
 void JavaScanner::skip_white_space() throw (string)
 {
     char current_ch = current_char();
+    char previous_ch = current_ch;
 
-    while (isspace(current_ch) || (current_ch == '{')) {
+    while (isspace(current_ch) || (current_ch == '/')) {
+/*
+ *      Searching For // or /* Type Comment
+    	// Start of a comment?
+    	if (current_ch == '/')
+    	{
+    		current_ch = next_char();
+    		if (current_ch == '/' && previous_ch == '/')
+    		{
+    			do
+				{
+    				current_ch = next_char();  // consume comment characters
+
+				} while ((current_ch != Source::END_OF_LINE) &&
+						 (current_ch != Source::END_OF_FILE));
+    		}
+
+    		if (previous_ch == '/' && current_ch == '*')
+			{
+				do
+				{
+					previous_ch = current_ch;
+					current_ch = next_char();  // consume comment characters
+
+				} while (previous_ch != '*' && current_ch != '/');
+			}
+
+
+    	} */
+
 
         // Start of a comment?
         if (current_ch == '{')
@@ -88,6 +118,8 @@ void JavaScanner::skip_white_space() throw (string)
                 current_ch = next_char();  // consume the '}'
             }
         }
+
+
 
         // Not a comment.
         else current_ch = next_char();  // consume whitespace character
