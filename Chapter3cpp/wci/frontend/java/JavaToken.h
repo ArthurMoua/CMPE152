@@ -25,11 +25,11 @@ enum class JavaTokenType
     THEN, TO, TYPE, UNTIL, VAR, WHILE, WITH,
 
     // Special symbols.
-    TILDE, EXCLAMATION, AT, PERCENT, CARET, AMPERSAND, ASTERISK, MINUS, PLUS, ASSIGN,
+    TILDE, EXCLAMATION, AT, PERCENT, HAT, AMPERSAND, MULT, MINUS, PLUS, EQUALS,
     BIT_OR, SLASH, COLON, SEMI_COLON, QUESTION_MARK, LESS_THAN, GREATER_THAN, DOT, COMMA,
-    APOSTROPHE, QUOTATION, LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE, LEFT_BRACKET, RIGHT_BRACKET,
-    INCREMENT, DECREMENT, BIT_LEFT, BIT_RIGHT, LESS_EQUALS, GREATER_EQUALS, ADD_ASSIGN, MINUS_ASSIGN, MULT_ASSIGN, DIV_ASSIGN,
-	EQUALS, OR_ASSIGN, REMAIN_ASSIGN, AND_ASSIGN, XOR_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_ASSIGN, LOGIC_OR, LOGIC_AND,
+    APOSTROPHE, QUOTATION, LEFT_PAREN, RIGHT_PAREN, LEFT_BRACKET, RIGHT_BRACKET, LEFT_BRACE, RIGHT_BRACE,
+    INCREMENT, DECREMENT, BIT_LEFT, BIT_RIGHT, LESS_EQUALS, GREATER_EQUALS, ADD_EQUALS, MINUS_EQUALS, MULT_EQUALS, DIV_EQUALS,
+	EQUALS_EQUALS, OR_EQUALS, REMAIN_EQUALS, AND_EQUALS, XOR_EQUALS, NOT_EQUALS, LSHIFT_EQUALS, RSHIFT_EQUALS, LOGIC_OR, LOGIC_AND,
 	LINE_COMMENT, BEGIN_COMMENT, END_COMMENT,
 
     IDENTIFIER, INTEGER, REAL, STRING,
@@ -80,12 +80,12 @@ constexpr JavaTokenType PT_TILDE = JavaTokenType::TILDE;
 constexpr JavaTokenType PT_EXCLAMATION = JavaTokenType::EXCLAMATION;
 constexpr JavaTokenType PT_AT = JavaTokenType::AT;
 constexpr JavaTokenType PT_PERCENT = JavaTokenType::PERCENT;
-constexpr JavaTokenType PT_CARET = JavaTokenType::CARET;
+constexpr JavaTokenType PT_HAT = JavaTokenType::HAT;
 constexpr JavaTokenType PT_AMPERSAND = JavaTokenType::AMPERSAND;
-constexpr JavaTokenType PT_ASTERISK = JavaTokenType::ASTERISK;
+constexpr JavaTokenType PT_ASTERISK = JavaTokenType::MULT;
 constexpr JavaTokenType PT_MINUS = JavaTokenType::MINUS;
 constexpr JavaTokenType PT_PLUS = JavaTokenType::PLUS;
-constexpr JavaTokenType PT_ASSIGN = JavaTokenType::ASSIGN;
+constexpr JavaTokenType PT_EQUALS = JavaTokenType::EQUALS;
 
 constexpr JavaTokenType PT_BIT_OR = JavaTokenType::BIT_OR;
 constexpr JavaTokenType PT_SLASH = JavaTokenType::SLASH;
@@ -112,18 +112,19 @@ constexpr JavaTokenType PT_BIT_LEFT = JavaTokenType::BIT_LEFT;
 constexpr JavaTokenType PT_BIT_RIGHT = JavaTokenType::BIT_RIGHT;
 constexpr JavaTokenType PT_LESS_EQUALS = JavaTokenType::LESS_EQUALS;
 constexpr JavaTokenType PT_GREATER_EQUALS = JavaTokenType::GREATER_EQUALS;
-constexpr JavaTokenType PT_ADD_ASSIGN = JavaTokenType::ADD_ASSIGN;
-constexpr JavaTokenType PT_MINUS_ASSIGN = JavaTokenType::MINUS_ASSIGN;
-constexpr JavaTokenType PT_MULT_ASSIGN = JavaTokenType::MULT_ASSIGN;
-constexpr JavaTokenType PT_DIV_ASSIGN = JavaTokenType::DIV_ASSIGN;
+constexpr JavaTokenType PT_ADD_EQUALS = JavaTokenType::ADD_EQUALS;
+constexpr JavaTokenType PT_MINUS_EQUALS = JavaTokenType::MINUS_EQUALS;
+constexpr JavaTokenType PT_MULT_EQUALS = JavaTokenType::MULT_EQUALS;
+constexpr JavaTokenType PT_DIV_EQUALS = JavaTokenType::DIV_EQUALS;
 
-constexpr JavaTokenType PT_EQUALS = JavaTokenType::EQUALS;
-constexpr JavaTokenType PT_OR_ASSIGN = JavaTokenType::OR_ASSIGN;
-constexpr JavaTokenType PT_REMAIN_ASSIGN = JavaTokenType::REMAIN_ASSIGN;
-constexpr JavaTokenType PT_AND_ASSIGN = JavaTokenType::AND_ASSIGN;
-constexpr JavaTokenType PT_XOR_ASSIGN = JavaTokenType::XOR_ASSIGN;
-constexpr JavaTokenType PT_LEFT_SHIFT_ASSIGN = JavaTokenType::LEFT_SHIFT_ASSIGN;
-constexpr JavaTokenType PT_RIGHT_SHIFT_ASSIGN = JavaTokenType::RIGHT_SHIFT_ASSIGN;
+constexpr JavaTokenType PT_EQUALS_EQUALS = JavaTokenType::EQUALS_EQUALS;
+constexpr JavaTokenType PT_OR_EQUALS = JavaTokenType::OR_EQUALS;
+constexpr JavaTokenType PT_REMAIN_EQUALS = JavaTokenType::REMAIN_EQUALS;
+constexpr JavaTokenType PT_AND_EQUALS = JavaTokenType::AND_EQUALS;
+constexpr JavaTokenType PT_XOR_EQUALS = JavaTokenType::XOR_EQUALS;
+constexpr JavaTokenType PT_NOT_EQUALS = JavaTokenType::NOT_EQUALS;
+constexpr JavaTokenType PT_LSHIFT_EQUALS = JavaTokenType::LSHIFT_EQUALS;
+constexpr JavaTokenType PT_RSHIFT_EQUALS = JavaTokenType::RSHIFT_EQUALS;
 constexpr JavaTokenType PT_LOGIC_OR = JavaTokenType::LOGIC_OR;
 constexpr JavaTokenType PT_LOGIC_AND = JavaTokenType::LOGIC_AND;
 
