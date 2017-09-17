@@ -32,18 +32,18 @@ void JavaSpecialSymbolToken::extract() throw (string)
     switch (current_ch)
     {
         // Single-character special symbols.
-        case '+':  case '-':  case '*':  case '/':  case ',':
-        case ';':  case '\'': case '=':  case '(':  case ')':
-        case '[':  case ']':  case '{':  case '}':  case '^':
+        case '~':  case '@':  case ':':  case ';':  case '?':
+        case '.':  case ',': case '\'':  case '"':  case '(':
+        case ')':  case '[':  case ']':  case '{':  case '}':
         {
             next_char();  // consume character
             break;
         }
 
-        // : or :=
-        case ':':
-        {
-            current_ch = next_char();  // consume ':';
+        // ! or !=
+        case '!':
+		{
+            current_ch = next_char();  // consume '!';
 
             if (current_ch == '=')
             {
@@ -52,54 +52,218 @@ void JavaSpecialSymbolToken::extract() throw (string)
             }
 
             break;
-        }
+		}
 
-        // < or <= or <>
-        case '<':
-        {
-            current_ch = next_char();  // consume '<';
+        // % or %=
+        case '%':
+		{
+            current_ch = next_char();  // consume '%';
 
             if (current_ch == '=')
             {
                 text += current_ch;
                 next_char();  // consume '='
             }
-            else if (current_ch == '>')
+
+            break;
+		}
+
+        // ^ or ^=
+        case '^':
+		{
+            current_ch = next_char();  // consume '!';
+
+            if (current_ch == '=')
+            {
+                text += current_ch;
+                next_char();  // consume '='
+            }
+
+            break;
+		}
+
+        // = or ==
+        case '=':
+		{
+            current_ch = next_char();  // consume '=';
+
+            if (current_ch == '=')
+            {
+                text += current_ch;
+                next_char();  // consume '='
+            }
+
+            break;
+		}
+
+        // & or &= or &&
+        case '&':
+		{
+            current_ch = next_char();  // consume '&';
+
+            if (current_ch == '=')
+            {
+                text += current_ch;
+                next_char();  // consume '='
+            }
+            if (current_ch == '&')
+			{
+				text += current_ch;
+				next_char();  // consume '&'
+			}
+
+            break;
+		}
+
+        // * or *= or */
+        case '*':
+		{
+            current_ch = next_char();  // consume '*';
+
+            if (current_ch == '=')
+            {
+                text += current_ch;
+                next_char();  // consume '='
+            }
+            if (current_ch == '/')
+			{
+				text += current_ch;
+				next_char();  // consume '/'
+			}
+
+            break;
+		}
+
+        // - or -- or -=
+        case '-':
+		{
+            current_ch = next_char();  // consume '-';
+
+            if (current_ch == '-')
+            {
+                text += current_ch;
+                next_char();  // consume '-'
+            }
+            if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
+
+            break;
+		}
+
+        // + or ++ or +=
+        case '+':
+		{
+            current_ch = next_char();  // consume '+';
+
+            if (current_ch == '+')
+            {
+                text += current_ch;
+                next_char();  // consume '+'
+            }
+            if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
+
+            break;
+		}
+
+        // | or || or |=
+        case '|':
+		{
+            current_ch = next_char();  // consume '|';
+
+            if (current_ch == '|')
+            {
+                text += current_ch;
+                next_char();  // consume '|'
+            }
+            if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
+
+            break;
+		}
+
+        // / or /= or // or /*
+        case '/':
+		{
+            current_ch = next_char();  // consume '/';
+
+            if (current_ch == '/')
+            {
+                text += current_ch;
+                next_char();  // consume '|'
+            }
+            if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
+            if (current_ch == '*')
+			{
+				text += current_ch;
+				next_char();  // consume '*'
+			}
+
+            break;
+		}
+
+        // < or << or <= or <<=
+        case '<':
+		{
+            current_ch = next_char();  // consume '<';
+
+            if (current_ch == '<')
+            {
+                text += current_ch;
+                next_char();  // consume '<'
+
+                if (current_ch == '=')
+				{
+					text += current_ch;
+					next_char();  // consume '='
+				}
+            }
+            else if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
+
+            break;
+		}
+
+        // > or >> or >= or >>=
+        case '>':
+		{
+            current_ch = next_char();  // consume '>';
+
+            if (current_ch == '>')
             {
                 text += current_ch;
                 next_char();  // consume '>'
+
+                if (current_ch == '=')
+				{
+					text += current_ch;
+					next_char();  // consume '='
+				}
             }
+            else if (current_ch == '=')
+			{
+				text += current_ch;
+				next_char();  // consume '='
+			}
 
             break;
-        }
-
-        // > or >=
-        case '>':
-        {
-            current_ch = next_char();  // consume '>';
-
-            if (current_ch == '=')
-            {
-                text += current_ch;
-                next_char();  // consume '='
-            }
-
-            break;
-        }
-
-        // . or ..
-        case '.':
-        {
-            current_ch = next_char();  // consume '.';
-
-            if (current_ch == '.')
-            {
-                text += current_ch;
-                next_char();  // consume '.'
-            }
-
-            break;
-        }
+		}
 
         default:
         {
