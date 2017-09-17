@@ -98,12 +98,12 @@ void JavaToken::initialize()
 		   JavaTokenType::EXCLAMATION,
 		   JavaTokenType::AT,
 		   JavaTokenType::PERCENT,
-		   JavaTokenType::CARET,
+		   JavaTokenType::HAT,
 		   JavaTokenType::AMPERSAND,
-		   JavaTokenType::ASTERISK,
+		   JavaTokenType::MULT,
 		   JavaTokenType::MINUS,
 		   JavaTokenType::PLUS,
-		   JavaTokenType::ASSIGN,
+		   JavaTokenType::EQUALS,
 
            JavaTokenType::BIT_OR,
 		   JavaTokenType::SLASH,
@@ -119,10 +119,11 @@ void JavaToken::initialize()
 		   JavaTokenType::QUOTATION,
 		   JavaTokenType::LEFT_PAREN,
 		   JavaTokenType::RIGHT_PAREN,
-		   JavaTokenType::LEFT_BRACE,
-		   JavaTokenType::RIGHT_BRACE,
 		   JavaTokenType::LEFT_BRACKET,
 		   JavaTokenType::RIGHT_BRACKET,
+		   JavaTokenType::LEFT_BRACE,
+		   JavaTokenType::RIGHT_BRACE,
+
 
            JavaTokenType::INCREMENT,
 		   JavaTokenType::DECREMENT,
@@ -130,18 +131,19 @@ void JavaToken::initialize()
 		   JavaTokenType::BIT_RIGHT,
 		   JavaTokenType::LESS_EQUALS,
 		   JavaTokenType::GREATER_EQUALS,
-		   JavaTokenType::ADD_ASSIGN,
-		   JavaTokenType::MINUS_ASSIGN,
-		   JavaTokenType::MULT_ASSIGN,
-		   JavaTokenType::DIV_ASSIGN,
+		   JavaTokenType::ADD_EQUALS,
+		   JavaTokenType::MINUS_EQUALS,
+		   JavaTokenType::MULT_EQUALS,
+		   JavaTokenType::DIV_EQUALS,
 
-           JavaTokenType::EQUALS,
-		   JavaTokenType::OR_ASSIGN,
-		   JavaTokenType::REMAIN_ASSIGN,
-		   JavaTokenType::AND_ASSIGN,
-		   JavaTokenType::XOR_ASSIGN,
-		   JavaTokenType::LEFT_SHIFT_ASSIGN,
-		   JavaTokenType::RIGHT_SHIFT_ASSIGN,
+           JavaTokenType::EQUALS_EQUALS,
+		   JavaTokenType::OR_EQUALS,
+		   JavaTokenType::REMAIN_EQUALS,
+		   JavaTokenType::AND_EQUALS,
+		   JavaTokenType::XOR_EQUALS,
+		   JavaTokenType::NOT_EQUALS,
+		   JavaTokenType::LSHIFT_EQUALS,
+		   JavaTokenType::RSHIFT_EQUALS,
 		   JavaTokenType::LOGIC_OR,
 		   JavaTokenType::LOGIC_AND,
 
@@ -157,11 +159,11 @@ void JavaToken::initialize()
 
     vector<string> ss_names =
     {
-           "TILDE", "EXCLAMATION", "AT", "PERCENT", "CARET", "AMPERSAND", "ASTERISK", "MINUS", "PLUS", "ASSIGN",
+           "TILDE", "EXCLAMATION", "AT", "PERCENT", "HAT", "AMPERSAND", "MULT", "MINUS", "PLUS", "EQUALS",
            "BIT_OR", "SLASH", "COLON", "SEMI_COLON", "QUESTION_MARK", "LESS_THAN", "GREATER_THAN", "DOT", "COMMA",
-           "APOSTROPHE", "QUOTATION", "LEFT_PAREN", "RIGHT_PAREN", "LEFT_BRACE", "RIGHT_BRACE", "LEFT_BRACKET", "RIGHT_BRACKET",
-           "INCREMENT", "DECREMENT", "BIT_LEFT", "BIT_RIGHT", "LESS_EQUALS", "GREATER_EQUALS", "ADD_ASSIGN", "MINUS_ASSIGN", "MULT_ASSIGN", "DIV_ASSIGN",
-           "EQUALS", "OR_ASSIGN", "REMAIN_ASSIGN", "AND_ASSIGN", "XOR_ASSIGN", "LEFT_SHIFT_ASSIGN", "RIGHT_SHIFT_ASSIGN", "LOGIC_OR", "LOGIC_AND",
+           "APOSTROPHE", "QUOTATION", "LEFT_PAREN", "RIGHT_PAREN", "LEFT_BRACKET", "RIGHT_BRACKET", "LEFT_BRACE", "RIGHT_BRACE",
+           "INCREMENT", "DECREMENT", "BIT_LEFT", "BIT_RIGHT", "LESS_EQUALS", "GREATER_EQUALS", "ADD_EQUALS", "MINUS_EQUALS", "MULT_EQUALS", "DIV_EQUALS",
+           "EQUALS_EQUALS", "OR_EQUALS", "REMAIN_EQUALS", "AND_EQUALS", "XOR_EQUALS", "NOT_EQUALS", "LSHIFT_EQUALS", "RSHIFT_EQUALS", "LOGIC_OR", "LOGIC_AND",
            "LINE_COMMENT", "BEGIN_COMMENT", "END_COMMENT"
     };
 
