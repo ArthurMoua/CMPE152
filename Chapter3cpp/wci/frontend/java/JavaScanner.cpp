@@ -71,14 +71,13 @@ Token *JavaScanner::extract_token() throw (string)
 void JavaScanner::skip_white_space() throw (string)
 {
     char current_ch = current_char();
-    char previous_ch = current_ch;
-    bool end_block = false;
-
 
     //Searching For // or /* Type Comment
     while (isspace(current_ch) || (current_ch == '/')) {
     	if (current_ch == '/')
     	{
+    		//Sets comment block checker to false
+    	    bool end_block = false;
     		current_ch = next_char();
     		if (current_ch == '/')
     		{
@@ -90,33 +89,37 @@ void JavaScanner::skip_white_space() throw (string)
 						 (current_ch != Source::END_OF_FILE));
     		}
 
-    		else if (current_ch == '*')
+    		if (current_ch == '*')
 			{
 				do
 				{
 					//previous_ch = current_ch;
 					current_ch = next_char();  // consume comment characters
-
-/*					if(previous_ch == '*' && current_ch == '/')
-					{
-						end_block = true;
-						still_in_loop = false;
-					}*/
 					if(current_ch == '*')
 					{
 						current_ch = next_char();
 						if(current_ch == '/')
+						{
+							//set comment checker block to true to leave loop
 							end_block = true;
+						}
 					}
 
-				} while ((end_block == false) && (current_ch != Source::END_OF_FILE));
-			}
+				// while ((end_block != true) && (current_ch != Source::END_OF_FILE));
+				} while ((end_block != true));
 
+	            // Found closing '/'?
+	            if (current_ch == '/')
+	            {
+	                current_ch = next_char();  // consume the '}'
+	            }
+			}
 
     	}
 
         else current_ch = next_char();  // consume whitespace character
     }
 }
+
 
 }}} // namespace wci::frontend::java
