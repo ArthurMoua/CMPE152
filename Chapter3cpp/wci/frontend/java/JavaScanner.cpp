@@ -72,56 +72,49 @@ void JavaScanner::skip_white_space() throw (string)
 {
     char current_ch = current_char();
     char previous_ch = current_ch;
+    bool end_block = false;
 
+
+    //Searching For // or /* Type Comment
     while (isspace(current_ch) || (current_ch == '/')) {
-/*
- *      Searching For // or /* Type Comment
-    	// Start of a comment?
     	if (current_ch == '/')
     	{
     		current_ch = next_char();
-    		if (current_ch == '/' && previous_ch == '/')
+    		if (current_ch == '/')
     		{
     			do
 				{
-    				current_ch = next_char();  // consume comment characters
+    				current_ch = next_char();  //Consumes all character in the rest of the line
 
 				} while ((current_ch != Source::END_OF_LINE) &&
 						 (current_ch != Source::END_OF_FILE));
     		}
 
-    		if (previous_ch == '/' && current_ch == '*')
+    		else if (current_ch == '*')
 			{
 				do
 				{
-					previous_ch = current_ch;
+					//previous_ch = current_ch;
 					current_ch = next_char();  // consume comment characters
 
-				} while (previous_ch != '*' && current_ch != '/');
+/*					if(previous_ch == '*' && current_ch == '/')
+					{
+						end_block = true;
+						still_in_loop = false;
+					}*/
+					if(current_ch == '*')
+					{
+						current_ch = next_char();
+						if(current_ch == '/')
+							end_block = true;
+					}
+
+				} while ((end_block == false) && (current_ch != Source::END_OF_FILE));
 			}
 
 
-    	} */
+    	}
 
-
-        // Start of a comment?
-        if (current_ch == '{')
-        {
-            do
-            {
-                current_ch = next_char();  // consume comment characters
-            } while ((current_ch != '}') &&
-                     (current_ch != Source::END_OF_FILE));
-
-            // Found closing '}'?
-            if (current_ch == '}') {
-                current_ch = next_char();  // consume the '}'
-            }
-        }
-
-
-
-        // Not a comment.
         else current_ch = next_char();  // consume whitespace character
     }
 }
