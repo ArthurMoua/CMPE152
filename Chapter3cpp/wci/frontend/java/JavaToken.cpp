@@ -27,54 +27,49 @@ void JavaToken::initialize()
 
     vector<string> rw_strings =
     {
-        "AND", "ARRAY", "BEGIN", "CASE", "CONST", "DIV", "DO", "DOWNTO",
-        "ELSE", "END", "FILE", "FOR", "FUNCTION", "GOTO", "IF", "IN",
-        "LABEL", "MOD", "NIL", "NOT", "OF", "OR", "PACKED", "PROCEDURE",
-        "PROGRAM", "RECORD", "REPEAT", "SET", "THEN", "TO", "TYPE",
-        "UNTIL", "VAR", "WHILE", "WITH"
+	"ABSTRACT", "DOUBLE", "INT", "LONG", "BREAK", "ELSE", "SWITCH",
+        "CASE", "ENUM", "NATIVE", "SUPER", "CHAR", "EXTENDS", "RETURN", "THIS",
+        "CLASS", "FLOAT", "SHORT", "THROW", "CONST", "FOR", "PACKAGE", "VOID",
+        "CONTINUE", "GOTO", "PROTECTED", "VOLATILE", "DO", "IF", "STATIC",
+        "WHILE"
     };
 
     vector<JavaTokenType> rw_keys =
     {
-        JavaTokenType::AND,
-        JavaTokenType::ARRAY,
-        JavaTokenType::BEGIN,
-        JavaTokenType::CASE,
-        JavaTokenType::CONST,
-        JavaTokenType::DIV,
-        JavaTokenType::DO,
-        JavaTokenType::DOWNTO,
-
+       JavaTokenType::ABSTRACT,
+        JavaTokenType::DOUBLE,
+        JavaTokenType::INT,
+        JavaTokenType::LONG,
+        JavaTokenType::BREAK,
         JavaTokenType::ELSE,
-        JavaTokenType::END,
-        JavaTokenType::FILE,
+        JavaTokenType::SWITCH,
+
+        JavaTokenType::CASE,
+        JavaTokenType::ENUM,
+        JavaTokenType::NATIVE,
+        JavaTokenType::SUPER,
+        JavaTokenType::CHAR,
+        JavaTokenType::EXTENDS,
+        JavaTokenType::RETURN,
+        JavaTokenType::THIS,
+
+        JavaTokenType::CLASS,
+        JavaTokenType::FLOAT,
+        JavaTokenType::SHORT,
+        JavaTokenType::THROW,
+        JavaTokenType::CONST,
         JavaTokenType::FOR,
-        JavaTokenType::FUNCTION,
+        JavaTokenType::PACKAGE,
+        JavaTokenType::VOID,
+
+        JavaTokenType::CONTINUE,
         JavaTokenType::GOTO,
+        JavaTokenType::PROTECTED,
+        JavaTokenType::VOLATILE,
+        JavaTokenType::DO,
         JavaTokenType::IF,
-        JavaTokenType::IN,
-
-        JavaTokenType::LABEL,
-        JavaTokenType::MOD,
-        JavaTokenType::NIL,
-        JavaTokenType::NOT,
-        JavaTokenType::OF,
-        JavaTokenType::OR,
-        JavaTokenType::PACKED,
-        JavaTokenType::PROCEDURE,
-
-        JavaTokenType::PROGRAM,
-        JavaTokenType::RECORD,
-        JavaTokenType::REPEAT,
-        JavaTokenType::SET,
-        JavaTokenType::THEN,
-        JavaTokenType::TO,
-        JavaTokenType::TYPE,
-
-        JavaTokenType::UNTIL,
-        JavaTokenType::VAR,
+        JavaTokenType::STATIC,
         JavaTokenType::WHILE,
-        JavaTokenType::WITH
     };
 
     for (int i = 0; i < rw_strings.size(); i++)
