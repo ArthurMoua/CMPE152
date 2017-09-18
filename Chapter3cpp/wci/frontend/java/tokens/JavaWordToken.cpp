@@ -43,20 +43,34 @@ void JavaWordToken::extract() throw (string)
 
     // Is it a reserved word or an identifier?
     string upper_case(text);
-    transform(upper_case.begin(), upper_case.end(),
-              upper_case.begin(), ::toupper);
-    if (JavaToken::RESERVED_WORDS.find(upper_case)
-            != JavaToken::RESERVED_WORDS.end())
+
+    int capital_letters = 0;
+
+    for(char c : upper_case)
     {
-        // Reserved word.
-        type = (TokenType) JavaToken::RESERVED_WORDS[upper_case];
-        value = new DataValue(upper_case);
+    	if(isupper(c))
+    		++capital_letters;
     }
-    else
+
+    if (capital_letters == 0) {
+	   //transform(upper_case.begin(), upper_case.end(), upper_case.begin(), ::toupper);
+    	for(int i = 0; i < upper_case.size();i++)
+    	{
+    		upper_case.at(i) = toupper(upper_case.at(i));
+    	}
+		if (JavaToken::RESERVED_WORDS.find(upper_case)
+				!= JavaToken::RESERVED_WORDS.end())
+		{
+			// Reserved word.
+			type = (TokenType) JavaToken::RESERVED_WORDS[upper_case];
+			value = new DataValue(upper_case);
+		}
+    }
+    else if(current_ch >= 'A' || current_ch <='Z' || current_ch >= 'a' || current_ch <= 'z' || current_ch == '_')
     {
         // Identifier.
         type = (TokenType) PT_IDENTIFIER;
     }
 }
 
-}}}}  // namespace wci::frontend::java::tokens
+}}}}   // namespace wci::frontend::java::tokens
