@@ -33,12 +33,13 @@ using namespace wci::intermediate::icodeimpl;
 set<PascalTokenType> StatementParser::STMT_START_SET =
 {
     PT_BEGIN, PT_CASE, PT_FOR, PT_IF, PT_REPEAT, PT_WHILE,
-    PT_IDENTIFIER, PT_SEMICOLON,
+    PT_IDENTIFIER, PT_SEMICOLON, PT_WHEN,
 };
 
 set<PascalTokenType> StatementParser::STMT_FOLLOW_SET =
 {
-    PT_SEMICOLON, PT_END, PT_ELSE, PT_UNTIL, PT_DOT,
+		//Potentially remove PT_OTHERWISE and PT_RIGHT_ARROW
+    PT_SEMICOLON, PT_END, PT_ELSE, PT_UNTIL, PT_DOT, PT_OTHERWISE, PT_RIGHT_ARROW,
 };
 
 StatementParser::StatementParser(PascalParserTD *parent)
