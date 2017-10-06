@@ -1,0 +1,44 @@
+arthur@arthur-VirtualBox:~/Desktop/Chapter8cpp$ make compile src=whenerrors.txt ./Chapter8cpp compile -ix whenerrors.txt
+001 BEGIN
+002     WHEN
+003         i := 3 => k > 5;
+            ^
+*** Undefined identifier [at "i"]
+              ^
+*** Unexpected token [at ":="]
+                        ^
+*** Unexpected token [at ">"]
+                          ^
+*** Missing := [at "5"]
+004         m = n  :  m := 2*n;
+            ^
+*** Undefined identifier [at "m"]
+                ^
+*** Undefined identifier [at "n"]
+                   ^
+*** Unexpected token [at ":"]
+                      ^
+*** Missing RIGHT ARROW [at "m"]
+005     END;
+        ^
+*** Unexpected token [at "END"]
+        ^
+*** Missing RIGHT ARROW [at "END"]
+           ^
+*** Unexpected token [at ";"]
+           ^
+*** Missing RIGHT ARROW [at ";"]
+006 END.
+    ^
+*** Unexpected token [at "END"]
+    ^
+*** Missing RIGHT ARROW [at "END"]
+       ^
+*** Unexpected token [at "."]
+       ^
+*** Missing RIGHT ARROW [at "."]
+007 
+makefile:80: recipe for target 'compile' failed
+make: *** [compile] Segmentation fault (core dumped)
+arthur@arthur-VirtualBox:~/Desktop/Chapter8cpp$ 
+

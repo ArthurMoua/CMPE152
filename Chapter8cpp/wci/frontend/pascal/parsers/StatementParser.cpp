@@ -14,6 +14,7 @@
 #include "WhileStatementParser.h"
 #include "ForStatementParser.h"
 #include "IfStatementParser.h"
+#include "WhenStatementParser.h"
 #include "CaseStatementParser.h"
 #include "../PascalParserTD.h"
 #include "../PascalToken.h"
@@ -94,6 +95,13 @@ ICodeNode *StatementParser::parse_statement(Token *token) throw (string)
         {
             IfStatementParser if_parser(this);
             statement_node = if_parser.parse_statement(token);
+            break;
+        }
+
+        case PT_WHEN:
+        {
+            WhenStatementParser when_parser(this);
+            statement_node = when_parser.parse_statement(token);
             break;
         }
 
