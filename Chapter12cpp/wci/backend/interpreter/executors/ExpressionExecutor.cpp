@@ -1,3 +1,4 @@
+
 /**
  * <h1>AssignmentExecutor</h1>
  *
@@ -41,7 +42,7 @@ using namespace wci::message;
 set<ICodeNodeTypeImpl> ExpressionExecutor::ARITH_OPS =
 {
     NT_ADD, NT_SUBTRACT, NT_MULTIPLY,
-    NT_FLOAT_DIVIDE, NT_INTEGER_DIVIDE, NT_MOD,
+    NT_FLOAT_DIVIDE, NT_INTEGER_DIVIDE, NT_COMPLEX_DIVIDE, NT_MOD,
 };
 
 ExpressionExecutor::ExpressionExecutor(Executor *parent)
@@ -83,6 +84,14 @@ CellValue *ExpressionExecutor::execute(ICodeNode *node)
             NodeValue *node_value = node->get_attribute((ICodeKey) VALUE);
             result_cell_value = new CellValue(node_value->value->f);
             break;
+        }
+
+        case NT_COMPLEX_CONSTANT:
+        {
+        	//Return the data value.
+        	NodeValue *node_value = node->get_attribute((ICodeKey) VALUE);
+        	result_cell_value = new CellValue(node_value->value->re,node_value->value->im);
+        	break;
         }
 
         case NT_STRING_CONSTANT:
@@ -308,11 +317,16 @@ CellValue *ExpressionExecutor::execute_binary_operator(
     bool integer_mode = false;
     bool character_mode = false;
     bool string_mode = false;
+    bool complex_mode = false;
 
     if (   (typespec1 == Predefined::integer_type)
         && (typespec2 == Predefined::integer_type))
     {
         integer_mode = true;
+    }
+    else if ( (typespec1 == Predefined::complex_type) && (typespec2 == Predefined::complex_type))
+    {
+    	complex_mode = true;
     }
     else if (   (   (typespec1 == Predefined::char_type)
                  || (   (operand1->type == STRING)
@@ -412,6 +426,39 @@ CellValue *ExpressionExecutor::execute_binary_operator(
 
                 default: result_cell_value = nullptr;  // shouldn't get here
             }
+        }
+        else if(complex_mode)
+        {
+        	double a = operand1->re;
+        	double b = operand1->im;
+        	double c = operand2->re;
+			double d = operand2->im;
+
+        	//Complex operations.
+        	switch (node_type)
+        	{
+				case NT_ADD:
+				{
+					result_cell_value = new CellValue(a + c, b + d);
+					break;
+				}
+				case NT_SUBTRACT:
+				{
+					result_cell_value = new CellValue(a - c, b - d);
+					break;
+				}
+				case NT_MULTIPLY:
+				{
+					result_cell_value = new CellValue(a * c - b * d, a * d + b * c);
+					break;
+				}
+				case NT_COMPLEX_DIVIDE:
+				{
+					result_cell_value = new CellValue((a * c + b * d)/(c*c+d*d), (b * c - a * d )/(c*c+d*d));
+					break;
+				}
+				default: result_cell_value = nullptr;	//shouldn't get there
+        	}
         }
         else
         {
@@ -537,6 +584,42 @@ CellValue *ExpressionExecutor::execute_binary_operator(
 
             default: result_cell_value = nullptr;  // shouldn't get here
         }
+    }
+    else if (complex_mode)
+    {
+    	int value1 = operand1->re;
+    	int value2 = operand2->im;
+
+    	//Complex operands.
+    	switch (node_type)
+    	{
+			case NT_EQ:
+			{
+				result_cell_value = new CellValue(value1 == value2);
+				break;
+			}
+			case NT_NE:
+			{
+				result_cell_value = new CellValue(value1 != value2);
+				break;
+			}
+			case NT_LT:
+			{
+				result_cell_value = new CellValue(value1 < value2);
+				break;
+			}
+			case NT_GT:
+			{
+				result_cell_value = new CellValue(value1 > value2);
+				break;
+			}
+			case NT_GE:
+			{
+				result_cell_value = new CellValue(value1 >= value2);
+				break;
+			}
+			default: result_cell_value = nullptr;	//shouldn't get value
+    	}
     }
     else if (character_mode)
     {
