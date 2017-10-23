@@ -26,15 +26,13 @@ using namespace wci::intermediate::typeimpl;
 using namespace wci::intermediate::symtabimpl;
 
 // Predefined types.
-TypeSpec *Predefined::integer_type;
-TypeSpec *Predefined::real_type;
+TypeSpec *Predefined::complex_type;
 TypeSpec *Predefined::boolean_type;
 TypeSpec *Predefined::char_type;
 TypeSpec *Predefined::undefined_type;
 
 // Predefined identifiers.
-SymTabEntry *Predefined::integer_id;
-SymTabEntry *Predefined::real_id;
+SymTabEntry *Predefined::complex_id;
 SymTabEntry *Predefined::boolean_id;
 SymTabEntry *Predefined::char_id;
 SymTabEntry *Predefined::false_id;
@@ -74,6 +72,13 @@ void Predefined::initialize(SymTabStack *symtab_stack)
  */
 void Predefined::initialize_types(SymTabStack *symtab_stack)
 {
+	//Type complex
+	complex_id = symtab_stack->enter_local("complex");
+	complex_type = TypeFactory::create_type((TypeForm) TF_SCALAR);
+	complex_type->set_identifier(complex_id);
+	complex_id->set_definition((Definition) DF_TYPE);
+	complex_id->set_typespec(complex_type);
+
     // Type integer.
     integer_id = symtab_stack->enter_local("integer");
     integer_type = TypeFactory::create_type((TypeForm) TF_SCALAR);
