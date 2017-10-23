@@ -24,17 +24,17 @@ class Predefined
 {
 public:
     // Predefined types.
-	static TypeSpec *complex_type;
     static TypeSpec *integer_type;
     static TypeSpec *real_type;
     static TypeSpec *boolean_type;
     static TypeSpec *char_type;
     static TypeSpec *undefined_type;
+    static TypeSpec *complex_type;
 
-    // Predefined identifiers.b
-    static SymTabEntry *complex_id;
+    // Predefined identifiers.
     static SymTabEntry *integer_id;
     static SymTabEntry *real_id;
+    static SymTabEntry *complex_id;
     static SymTabEntry *boolean_id;
     static SymTabEntry *char_id;
     static SymTabEntry *false_id;
