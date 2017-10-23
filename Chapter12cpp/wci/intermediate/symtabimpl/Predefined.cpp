@@ -26,12 +26,16 @@ using namespace wci::intermediate::typeimpl;
 using namespace wci::intermediate::symtabimpl;
 
 // Predefined types.
-TypeSpec *Predefined::complex_type;
+TypeSpec *Predefined::integer_type;
+TypeSpec *Predefined::real_type;
 TypeSpec *Predefined::boolean_type;
 TypeSpec *Predefined::char_type;
 TypeSpec *Predefined::undefined_type;
+TypeSpec *Predefined::complex_type;
 
 // Predefined identifiers.
+SymTabEntry *Predefined::integer_id;
+SymTabEntry *Predefined::real_id;
 SymTabEntry *Predefined::complex_id;
 SymTabEntry *Predefined::boolean_id;
 SymTabEntry *Predefined::char_id;
