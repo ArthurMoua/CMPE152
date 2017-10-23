@@ -46,6 +46,9 @@ struct CellValue
     CellValue(bool b)
         : value(new DataValue(b)), cell(nullptr), cell_array(nullptr),
           memory_map(nullptr) {}
+    CellValue(double re, double im)
+    	: value(new DataValue(re,im)), cell(nullptr), cell_array(nullptr),
+		  memory_map(nullptr) {}
     CellValue(string s)
         : value(new DataValue(s)), cell(nullptr), cell_array(nullptr),
           memory_map(nullptr) {}

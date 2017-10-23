@@ -21,7 +21,7 @@ using namespace std;
  */
 enum class ValueType
 {
-    INTEGER, FLOAT, CHAR, BOOLEAN, STRING,
+    INTEGER, FLOAT, CHAR, BOOLEAN, STRING, COMPLEX
 };
 
 constexpr ValueType INTEGER = ValueType::INTEGER;
@@ -29,6 +29,7 @@ constexpr ValueType FLOAT = ValueType::FLOAT;
 constexpr ValueType CHAR = ValueType::CHAR;
 constexpr ValueType BOOLEAN = ValueType::BOOLEAN;
 constexpr ValueType STRING = ValueType::STRING;
+constexpr ValueType COMPLEX = ValueType::COMPLEX;
 
 /**
  * Generic data value.
@@ -43,6 +44,8 @@ public:
         float f;
         char c;
         bool b;
+        double re;
+        double im;
         string s;
     };
 
@@ -51,6 +54,7 @@ public:
     DataValue(const float f) : type(ValueType::FLOAT),   f(f) {}
     DataValue(const char c)  : type(ValueType::CHAR),    c(c) {}
     DataValue(const bool b)  : type(ValueType::BOOLEAN), b(b) {}
+    DataValue(const double re, const double im) : type(ValueType::COMPLEX), re(re), im(im) {}
 
     DataValue(const string s) : type(ValueType::STRING)
     {
@@ -67,6 +71,7 @@ public:
             case ValueType::FLOAT:   this->f = orig.f; break;
             case ValueType::CHAR:    this->c = orig.c; break;
             case ValueType::BOOLEAN: this->b = orig.b; break;
+            case ValueType::COMPLEX: this->re = orig.re; this->im=orig.im; break;
             case ValueType::STRING:  new (&this->s) string(orig.s); break;
         }
 	}
@@ -82,7 +87,7 @@ public:
             case ValueType::CHAR:    return string(1, this->c);
             case ValueType::BOOLEAN: return to_string(this->b);
             case ValueType::STRING:  return this->s;
-
+            case ValueType::COMPLEX: return (to_string(this->re) + "," + to_string(this->im) + "i");
             default: return "";
         }
     }

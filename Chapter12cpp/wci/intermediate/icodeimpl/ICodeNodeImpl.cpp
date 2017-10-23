@@ -59,11 +59,15 @@ void ICodeNodeImpl::initialize()
         NT_SUBTRACT,
         NT_OR,
         NT_NEGATE,
+		NT_COMPLEX_ADD,
+		NT_COMPLEX_SUBTRACT,
 
         // Multiplicative operators
         NT_MULTIPLY,
         NT_INTEGER_DIVIDE,
         NT_FLOAT_DIVIDE,
+		NT_COMPLEX_MULTIPLY,
+		NT_COMPLEX_DIVIDE,
         NT_MOD,
         NT_AND,
 
@@ -93,10 +97,10 @@ void ICodeNodeImpl::initialize()
         "EQ", "NE", "LT", "LE", "GT", "GE", "NOT",
 
         // Additive operators
-        "ADD", "SUBTRACT", "OR", "NEGATE",
+        "ADD", "SUBTRACT", "OR", "NEGATE", "COMPLEX_ADD", "COMPLEX_SUBTRACT"
 
         // Multiplicative operators
-        "MULTIPLY", "INTEGER_DIVIDE", "FLOAT_DIVIDE", "MOD", "AND",
+        "MULTIPLY", "INTEGER_DIVIDE", "FLOAT_DIVIDE", "COMPLEX_MULTIPLY", "COMPLEX_DIVIDE", "MOD", "AND",
 
         // Operands
         "VARIABLE", "SUBSCRIPTS", "FIELD",
@@ -245,6 +249,12 @@ ICodeNode *ICodeNodeImpl::copy()
                 {
                     copy_data_value = new DataValue(orig_data_value->s);
                     break;
+                }
+
+                case COMPLEX:
+                {
+                	copy_data_value = new DataValue(orig_data_value->re, orig_data_value->im);
+					break;
                 }
             }
 
