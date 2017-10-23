@@ -54,7 +54,7 @@ public:
     DataValue(const float f) : type(ValueType::FLOAT),   f(f) {}
     DataValue(const char c)  : type(ValueType::CHAR),    c(c) {}
     DataValue(const bool b)  : type(ValueType::BOOLEAN), b(b) {}
-    DataValue(const double re, const double im) : type(ValueType::COMPLEX), re(re), im(im) {}
+    DataValue(const double re, const double im) : type(ValueType::COMPLEX) {}
 
     DataValue(const string s) : type(ValueType::STRING)
     {
