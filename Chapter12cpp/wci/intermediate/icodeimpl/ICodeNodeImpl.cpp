@@ -79,6 +79,7 @@ void ICodeNodeImpl::initialize()
         NT_REAL_CONSTANT,
         NT_STRING_CONSTANT,
         NT_BOOLEAN_CONSTANT,
+		NT_COMPLEX_CONSTANT,
 
         // WRITE parameter
         NT_WRITE_PARM,
@@ -106,6 +107,7 @@ void ICodeNodeImpl::initialize()
         "VARIABLE", "SUBSCRIPTS", "FIELD",
         "INTEGER_CONSTANT", "REAL_CONSTANT",
         "STRING_CONSTANT", "BOOLEAN_CONSTANT",
+		"COMPLEX_CONSTANT",
 
         // WRITE parameter
         "WRITE_PARM",
