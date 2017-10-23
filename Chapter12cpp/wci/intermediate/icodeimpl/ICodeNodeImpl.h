@@ -30,10 +30,10 @@ enum class ICodeNodeTypeImpl
     EQ, NE, LT, LE, GT, GE, NOT,
 
     // Additive operators
-    ADD, SUBTRACT, OR, NEGATE,
+    ADD, SUBTRACT, OR, NEGATE, COMPLEX_ADD, COMPLEX_SUBTRACT,
 
     // Multiplicative operators
-    MULTIPLY, INTEGER_DIVIDE, FLOAT_DIVIDE, MOD, AND,
+    MULTIPLY, INTEGER_DIVIDE, FLOAT_DIVIDE, COMPLEX_MULTIPLY, COMPLEX_DIVIDE, MOD, AND,
 
     // Operands
     VARIABLE, SUBSCRIPTS, FIELD,
@@ -72,12 +72,16 @@ constexpr ICodeNodeTypeImpl NT_NOT = ICodeNodeTypeImpl::NOT;
 
 constexpr ICodeNodeTypeImpl NT_ADD = ICodeNodeTypeImpl::ADD;
 constexpr ICodeNodeTypeImpl NT_SUBTRACT = ICodeNodeTypeImpl::SUBTRACT;
+constexpr ICodeNodeTypeImpl NT_COMPLEX_ADD = ICodeNodeTypeImpl::COMPLEX_ADD;
+constexpr ICodeNodeTypeImpl NT_COMPLEX_SUBTRACT = ICodeNodeTypeImpl::COMPLEX_SUBTRACT;
 constexpr ICodeNodeTypeImpl NT_OR = ICodeNodeTypeImpl::OR;
 constexpr ICodeNodeTypeImpl NT_NEGATE = ICodeNodeTypeImpl::NEGATE;
 
 constexpr ICodeNodeTypeImpl NT_MULTIPLY = ICodeNodeTypeImpl::MULTIPLY;
 constexpr ICodeNodeTypeImpl NT_INTEGER_DIVIDE = ICodeNodeTypeImpl::INTEGER_DIVIDE;
 constexpr ICodeNodeTypeImpl NT_FLOAT_DIVIDE = ICodeNodeTypeImpl::FLOAT_DIVIDE;
+constexpr ICodeNodeTypeImpl NT_COMPLEX_MULTIPLY = ICodeNodeTypeImpl::COMPLEX_MULTIPLY;
+constexpr ICodeNodeTypeImpl NT_COMPLEX_DIVIDE = ICodeNodeTypeImpl::COMPLEX_DIVIDE;
 constexpr ICodeNodeTypeImpl NT_MOD = ICodeNodeTypeImpl::MOD;
 constexpr ICodeNodeTypeImpl NT_AND = ICodeNodeTypeImpl::AND;
 
