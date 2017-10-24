@@ -454,8 +454,17 @@ CellValue *ExpressionExecutor::execute_binary_operator(
 				}
 				case NT_COMPLEX_DIVIDE:
 				{
-					result_cell_value = new CellValue((a * c + b * d)/(c*c+d*d), (b * c - a * d )/(c*c+d*d));
-					break;
+					if (c*c + d*d != 0)
+					{
+						result_cell_value = new CellValue((a * c + b * d)/(c*c+d*d), (b * c - a * d )/(c*c+d*d));
+						break;
+					}
+					else
+					{
+						error_handler.flag(node, DIVISION_BY_ZERO, this);
+						result_cell_value = new CellValue(0,0);
+
+					}
 				}
 				default: result_cell_value = nullptr;	//shouldn't get there
         	}
