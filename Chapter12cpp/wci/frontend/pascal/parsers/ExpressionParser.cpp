@@ -235,6 +235,12 @@ ICodeNode *ExpressionParser::parse_simple_expression(Token *token)
                     result_typespec = Predefined::real_type;
                 }
 
+                else if (TypeChecker::are_both_complex(result_typespec,
+                                                           term_typespec))
+                {
+                    result_typespec = Predefined::complex_type;
+                }
+
                 else
                 {
                     error_handler.flag(expr_token, INCOMPATIBLE_TYPES, this);
@@ -334,6 +340,12 @@ ICodeNode *ExpressionParser::parse_term(Token *token) throw (string)
                     result_typespec = Predefined::real_type;
                 }
 
+                else if (TypeChecker::are_both_complex(result_typespec,
+                										factor_typespec))
+                {
+                    result_typespec = Predefined::complex_type;
+                }
+
                 else
                 {
                     error_handler.flag(expr_token, INCOMPATIBLE_TYPES, this);
@@ -353,6 +365,11 @@ ICodeNode *ExpressionParser::parse_term(Token *token) throw (string)
                 {
                     result_typespec = Predefined::real_type;
                 }
+                else if (TypeChecker::are_both_complex(result_typespec,
+						factor_typespec))
+                {
+                	result_typespec = Predefined::complex_type;
+                }
                 else
                 {
                     error_handler.flag(expr_token, INCOMPATIBLE_TYPES, this);
@@ -362,6 +379,9 @@ ICodeNode *ExpressionParser::parse_term(Token *token) throw (string)
             }
 
             case PT_DIV:
+            {
+
+            }
             case PT_MOD:
             {
                 // Both operands integer ==> integer result.
