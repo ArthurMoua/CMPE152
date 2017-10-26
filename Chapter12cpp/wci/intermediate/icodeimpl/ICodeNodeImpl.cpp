@@ -98,7 +98,7 @@ void ICodeNodeImpl::initialize()
         "EQ", "NE", "LT", "LE", "GT", "GE", "NOT",
 
         // Additive operators
-        "ADD", "SUBTRACT", "OR", "NEGATE", "COMPLEX_ADD", "COMPLEX_SUBTRACT"
+        "ADD", "SUBTRACT", "OR", "NEGATE", "COMPLEX_ADD", "COMPLEX_SUBTRACT",
 
         // Multiplicative operators
         "MULTIPLY", "INTEGER_DIVIDE", "FLOAT_DIVIDE", "COMPLEX_MULTIPLY", "COMPLEX_DIVIDE", "MOD", "AND",
