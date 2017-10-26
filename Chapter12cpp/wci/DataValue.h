@@ -21,7 +21,7 @@ using namespace std;
  */
 enum class ValueType
 {
-    INTEGER, FLOAT, CHAR, BOOLEAN, STRING, COMPLEX
+    INTEGER, FLOAT, CHAR, BOOLEAN, STRING, COMPLEX,
 };
 
 constexpr ValueType INTEGER = ValueType::INTEGER;

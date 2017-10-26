@@ -57,6 +57,14 @@ public:
     static bool is_at_least_one_real(TypeSpec *typespec1, TypeSpec *typespec2);
 
     /**
+
+     */
+    static bool are_both_complex(TypeSpec *typespec1, TypeSpec *typespec2);
+
+    static bool is_complex(TypeSpec *typespec);
+
+
+    /**
      * Check if a type specification is boolean.
      * @param type the type specification to check.
      * @return true if boolean, else false.

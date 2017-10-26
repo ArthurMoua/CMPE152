@@ -16,6 +16,8 @@
 #include "../SymTabStack.h"
 #include "../typeimpl/TypeSpecImpl.h"
 #include "../../DataValue.h"
+#include "../SymTabFactory.h"
+#include "../SymTab.h"
 
 namespace wci { namespace intermediate { namespace symtabimpl {
 
@@ -28,10 +30,10 @@ using namespace wci::intermediate::symtabimpl;
 // Predefined types.
 TypeSpec *Predefined::integer_type;
 TypeSpec *Predefined::real_type;
+TypeSpec *Predefined::complex_type;
 TypeSpec *Predefined::boolean_type;
 TypeSpec *Predefined::char_type;
 TypeSpec *Predefined::undefined_type;
-TypeSpec *Predefined::complex_type;
 
 // Predefined identifiers.
 SymTabEntry *Predefined::integer_id;
@@ -76,13 +78,6 @@ void Predefined::initialize(SymTabStack *symtab_stack)
  */
 void Predefined::initialize_types(SymTabStack *symtab_stack)
 {
-	//Type complex
-	complex_id = symtab_stack->enter_local("complex");
-	complex_type = TypeFactory::create_type((TypeForm) TF_SCALAR);
-	complex_type->set_identifier(complex_id);
-	complex_id->set_definition((Definition) DF_TYPE);
-	complex_id->set_typespec(complex_type);
-
     // Type integer.
     integer_id = symtab_stack->enter_local("integer");
     integer_type = TypeFactory::create_type((TypeForm) TF_SCALAR);
@@ -97,6 +92,22 @@ void Predefined::initialize_types(SymTabStack *symtab_stack)
     real_id->set_definition((Definition) DF_TYPE);
     real_id->set_typespec(real_type);
 
+	//Type complex
+    complex_id = symtab_stack->enter_local("complex");
+	complex_type = TypeFactory::create_type((TypeForm) TF_RECORD);
+	complex_type->set_identifier(complex_id);
+	complex_id->set_definition((Definition) DF_TYPE);
+	complex_id->set_typespec(complex_type);
+
+	SymTab *complexsymtab = SymTabFactory::create_symtab(0);
+	SymTabEntry *re_id = complexsymtab->enter("re");
+	SymTabEntry *im_id = complexsymtab->enter("im");
+
+	re_id->set_typespec(real_type);
+	im_id->set_typespec(real_type);
+	complex_type->set_attribute((TypeKey) RECORD_SYMTAB,
+			new TypeValue(complexsymtab));
+/**/
     // Type boolean.
     boolean_id = symtab_stack->enter_local("boolean");
     boolean_type = TypeFactory::create_type((TypeForm) TF_ENUMERATION);
@@ -113,6 +124,7 @@ void Predefined::initialize_types(SymTabStack *symtab_stack)
 
     // Undefined type.
     undefined_type = TypeFactory::create_type((TypeForm) TF_SCALAR);
+
 }
 
 void Predefined::initialize_constants(SymTabStack *symtab_stack)

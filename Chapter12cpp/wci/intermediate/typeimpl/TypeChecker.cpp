@@ -36,6 +36,17 @@ bool TypeChecker::is_real(TypeSpec *typespec)
            && (typespec->base_type() == Predefined::real_type);
 }
 
+bool TypeChecker::is_complex(TypeSpec *typespec)
+{
+   return    (typespec != nullptr)
+   && (typespec->base_type() == Predefined::complex_type);
+}
+
+bool TypeChecker::are_both_complex(TypeSpec *typespec1, TypeSpec *typespec2)
+{
+    return    is_complex(typespec1) && is_complex(typespec2);
+}
+
 bool TypeChecker::is_integer_or_real(TypeSpec *typespec)
 {
     return is_integer(typespec) || is_real(typespec);
