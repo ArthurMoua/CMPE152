@@ -33,7 +33,7 @@ variable : IDENTIFIER ;
 
 drawStmt : drawObj '(' variable ',' variable ',' variable ',' variable ')'	# drawObjExpr ;
 
-ifStmt : IF expr THEN stmt (ELSE stmt) ;
+ifStmt : IF expr THEN stmt (ELSE stmt);
 
 whileStmt : WHILE expr DO stmt ;
 
@@ -62,9 +62,12 @@ number locals [ TypeSpec type = null ]
     
 drawObj : SHAPE ;
 
+tetris : SHAPE ;
+
 SHAPE : 'square'
 	  | 'circle'
 	  | 'line'
+	  | 'tetris'
 	  ;
 
 WHILE: 'while';

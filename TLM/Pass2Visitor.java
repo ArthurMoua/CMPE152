@@ -7,6 +7,7 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
 {
     String programName;
     private PrintWriter jFile;
+    int labelcount = 0;
     
     public Pass2Visitor(PrintWriter jFile)
     {
@@ -92,6 +93,7 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
         
         return visitChildren(ctx); 
     }
+    
     @Override 
     public Integer visitAssignmentStmt(TLMParser.AssignmentStmtContext ctx)
     {
@@ -107,6 +109,89 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
                            + " " + typeIndicator);
 
         return value; 
+    }
+    
+    @Override
+    public Integer visitIfStmt(TLMParser.IfStmtContext ctx)
+    {
+    	visit(ctx.expr());
+    	int temp;		//Two labels are created with ifstmt
+    					// 
+    	if (ctx.getChild(1).getText().contains(">"))
+    	{
+    		if (ctx.getChild(1).getText().contains(">="))
+    		{
+    			jFile.println("\tif_icmpge" + "\tLabel000"+labelcount);
+    		}
+    		else
+    		{
+    			jFile.println("\tif_icmpgt" + "\tLabel000"+labelcount);
+    		}
+    		
+    		labelcount++;   		//Increments label
+    		visit(ctx.getChild(6));
+    		/*
+    		Paste the following code to check values of assignment statements in ifstmt after visit(ctx.getChild(3)); or visit(ctx.getChild(6)); 
+    		
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/i I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/j I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");
+    		*/
+    		jFile.println("\tgoto\tLabel000"+labelcount);
+    		temp = labelcount -1;	//to print previous label in jump
+    		jFile.println("\n\tLabel000"+temp+":");
+    		visit(ctx.getChild(3));
+    		
+    		jFile.println("\n\tLabel000"+labelcount+":");
+    		labelcount++;			//count for next label
+    		
+    	}
+    	else if (ctx.getChild(1).getText().contains("<"))
+    	{
+    		if (ctx.getChild(1).getText().contains("<="))
+    		{
+    			jFile.println("\tif_icmple" + "\tLabel000"+labelcount);
+    		}
+    		else if (ctx.getChild(1).getText().contains("<>"))
+    		{
+    			jFile.println("\tif_icmpne" + "\tLabel000"+labelcount);
+    		}
+    		else
+    		{
+    			jFile.println("\tif_icmplt" + "\tLabel000"+labelcount);
+    		}
+    		
+    		labelcount++;
+    		visit(ctx.getChild(6));
+    		
+    		jFile.println("\tgoto\tLabel000"+labelcount);
+    		temp = labelcount -1;
+    		jFile.println("\n\tLabel000"+temp+":");
+    		visit(ctx.getChild(3));
+    		
+    		jFile.println("\n\tLabel000"+labelcount+":");    	
+    		labelcount++;
+		}
+    	else if (ctx.getChild(1).getText().contains("="))
+    	{
+    		jFile.println("\tif_icmpeq" + "\tLabel000"+labelcount);
+    		labelcount++;
+    		visit(ctx.getChild(6));
+    		
+    		jFile.println("\tgoto\tLabel000"+labelcount);
+    		temp = labelcount -1;
+    		jFile.println("\n\tLabel000"+temp+":");
+    		visit(ctx.getChild(3));
+    		
+    		jFile.println("\n\tLabel000"+labelcount+":");
+    		labelcount++;
+    	}
+    	
+    	
+    	return 0;
     }
 
     @Override 
@@ -141,6 +226,135 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
         
         return value; 
     }
+    
+    @Override
+    public Integer visitWhileStmt(TLMParser.WhileStmtContext ctx)
+    {
+    	int temp, temp2, temp3;		//Two labels are created with ifstmt
+		 
+    	labelcount++;   		//Increments label
+    	temp = labelcount;		//Store original starting label
+		jFile.println("\tLabel000"+temp+":");
+    	
+    	visit(ctx.expr());
+
+    	if (ctx.getChild(1).getText().contains(">"))
+    	{
+    		labelcount++; 
+    		temp2 = labelcount;
+    		
+    		if (ctx.getChild(1).getText().contains(">="))
+    		{
+    			jFile.println("\tif_icmpge" + "\tLabel000"+temp2);
+    		}
+    		else
+    		{
+    			jFile.println("\tif_icmpgt" + "\tLabel000"+temp2);
+    		}
+    		labelcount++; 
+    		temp3 = labelcount;
+    		jFile.println("\tgoto\tLabel000"+temp3);
+    		
+    		jFile.println("\tLabel000"+temp2+":");
+    		
+    		visit(ctx.getChild(3));
+    		
+    		
+    		/*Paste the following code to check values of assignment statements in ifstmt after visit(ctx.getChild(3)); or visit(ctx.getChild(6)); 
+    		
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/i I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/j I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");*/
+    		
+    		
+    		jFile.println("\tgoto\tLabel000"+temp);
+    		
+    		jFile.println("\tLabel000"+temp3+":");
+    		
+    		labelcount++;			//count for next label
+    		
+    	}
+    	else if (ctx.getChild(1).getText().contains("<"))
+    	{
+    		labelcount++; 
+    		temp2 = labelcount;
+    		if (ctx.getChild(1).getText().contains("<="))
+    		{
+    			jFile.println("\tif_icmple" + "\tLabel000"+temp2);
+    		}
+    		else if (ctx.getChild(1).getText().contains("<>"))
+    		{
+    			jFile.println("\tif_icmpne" + "\tLabel000"+temp2);
+    		}
+    		else
+    		{
+    			jFile.println("\tif_icmplt" + "\tLabel000"+temp2);
+    		}
+    		labelcount++; 
+    		temp3 = labelcount;
+    		jFile.println("\tgoto\tLabel000"+temp3);
+    		
+    		jFile.println("\tLabel000"+temp2+":");
+    		
+    		visit(ctx.getChild(3));
+    		
+    		
+    		/*Paste the following code to check values of assignment statements in ifstmt after visit(ctx.getChild(3)); or visit(ctx.getChild(6)); 
+    		
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/i I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/j I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");*/
+    		
+    		
+    		jFile.println("\tgoto\tLabel000"+temp);
+    		
+    		jFile.println("\tLabel000"+temp3+":");
+    		
+    		labelcount++;			//count for next label
+		}
+    	else if (ctx.getChild(1).getText().contains("="))
+    	{
+    		labelcount++; 
+    		temp2 = labelcount;
+    		
+    		jFile.println("\tif_icmpeq" + "\tLabel000"+temp2);
+    		
+    		labelcount++; 
+    		temp3 = labelcount;
+    		jFile.println("\tgoto\tLabel000"+temp3);
+    		
+    		jFile.println("\tLabel000"+temp2+":");
+    		
+    		visit(ctx.getChild(3));
+    		
+    		
+    		/*Paste the following code to check values of assignment statements in ifstmt after visit(ctx.getChild(3)); or visit(ctx.getChild(6)); 
+    		
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/i I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");
+    		jFile.println("\tgetstatic   java/lang/System/out Ljava/io/PrintStream;	;calling the print function");
+    		jFile.println("\tgetstatic   sample/j I");
+    		jFile.println("\tinvokevirtual java/io/PrintStream/println(I)V			;printing the value");*/
+    		
+    		
+    		jFile.println("\tgoto\tLabel000"+temp);
+    		
+    		jFile.println("\tLabel000"+temp3+":");
+    		
+    		labelcount++;			//count for next label
+    	}
+    	
+    	
+    	return 0;
+    }
+    
 
     @Override 
     public Integer visitMulDivExpr(TLMParser.MulDivExprContext ctx)
@@ -175,6 +389,8 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
         return value; 
     }
     
+    
+    
     @Override 
     public Integer visitINEQExpr(TLMParser.INEQExprContext ctx) 
     { 
@@ -191,45 +407,41 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
         String op = ctx.INEQ().getText();
         String opcode;
         
-        jFile.println("this is a test");
+        
 
-        if (op.equals("=")) {
-            opcode = integerMode ? "if_icmpeq"
-                   : realMode    ? "fcmpl Lable1"
+/*        if (op.equals("=")) {
+            opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmpeq Lable1"
+                   : realMode    ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                    :               "f???";
         }
         else if ( op.equals("<>")) {
-        	opcode = integerMode ? "if_icmpne"
-                    : realMode   ? "fcmpl"
+        	opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmpne Lable1"
+                    : realMode   ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                     :               "f???";
         }
         else if ( op.equals("<")) {
-        	opcode = integerMode ? "if_icmplt"
-                    : realMode   ? "fcmpl"
+        	opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmplt Lable1"
+                    : realMode   ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                     :               "f???";
         }
         else if ( op.equals(">")) {
-        	opcode = integerMode ? "if_icmpgt"
-                    : realMode   ? "fcmpl"
+        	opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmpgt Lable1"
+                    : realMode   ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                     :               "f???";
         }
         else if ( op.equals("<=")) {
-        	opcode = integerMode ? "if_icmple"
-                    : realMode   ? "fcmpl"
+        	opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmple Lable1"
+                    : realMode   ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                     :               "f???";
         }
         else if ( op.equals(">=")) {
-        	opcode = integerMode ? "if_icmpge"
-                    : realMode   ? "fcmpl"
+        	opcode = integerMode ? "iload_1" + "\n" + "iload_2" + "\n" + "if_icmpge Lable1"
+                    : realMode   ? "fload_1" + "\n" + "fload_2" + "\n" + "fcmpl Lable1"
                     :               "f???";
-        }
-        else
-        {
-        	jFile.println(";error in INEQ parsing");
-        }
+        }*/
         
         // Emit a comparison instruction.
-        jFile.println("\t" + opcode);
+        //jFile.println("\t" + opcode);
         
         return value; 
     }
@@ -286,6 +498,7 @@ public class Pass2Visitor extends TLMBaseVisitor<Integer>
         
         return visitChildren(ctx); 
     }
+    
     @Override
     public Integer visitDrawObjExpr(TLMParser.DrawObjExprContext ctx)
     {
